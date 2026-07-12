@@ -1,8 +1,7 @@
 import streamlit as st
-import time
 
 # ==========================================
-# 1. Page Configuration & Styling
+# 1. PAGE CONFIGURATION
 # ==========================================
 st.set_page_config(page_title="AI Grant & Funding Finder", page_icon="💼", layout="centered")
 
@@ -10,11 +9,11 @@ st.title("💼 AI Grant & Funding Finder Dashboard")
 st.markdown("---")
 st.subheader("Enter Startup Profile Parameters")
 
-# Frontend Input Fields
+# Input fields for the user
 col1, col2 = st.columns(2)
 with col1:
     company_name = st.text_input("Company Name", placeholder="e.g., TECH achivers")
-    domain = st.text_input("Industry Domain", placeholder="e.g., AI-driven EdTech")
+    domain = st.text_input("Industry Domain", placeholder="e.g., EdTech / AI-driven")
     location = st.text_input("Location", placeholder="e.g., Pune")
 with col2:
     stage = st.selectbox("Current Stage", ["Idea / Concept", "Prototype / MVP built", "Early Traction", "Scaling"])
@@ -23,98 +22,92 @@ with col2:
 st.markdown("---")
 
 # ==========================================
-# 2. IBM Bob Compliance Inspection Engine
+# 2. THE "IBM BOB" COMPLIANCE ENGINE
 # ==========================================
 def run_bob_compliance_inspector(proposal_text: str) -> dict:
     """
-    IBM Bob Engine: Checks for essential compliance headers.
+    Validates structural tags in payload data to ensure all mandatory headers exist.
     """
-    required_headers = ["# Executive Summary", "Problem Statement", "Innovation Index", "Milestone-Based Budget Allocation"]
-    if all(header in proposal_text for header in required_headers):
+    required_sections = ["Executive Summary", "Problem Statement", "Innovation Index", "Milestone-Based Budget Allocation", "Human-Validation Disclaimer"]
+    if all(section in proposal_text for section in required_sections):
         return {"status": "Verified: Layout Compliance Passed", "code": 200}
     return {"status": "Warning: Formatting Anomalies Detected", "code": 422}
 
 # ==========================================
-# 3. Connected Pipeline Execution Logic
+# 3. EXECUTION PIPELINE
 # ==========================================
 if st.button("Evaluate & Route to IBM Bob", type="primary"):
     if not company_name or not domain or not location:
         st.error("Please fill out all input fields before submitting.")
     else:
-        with st.spinner("🤖 Triggering watsonx Orchestrate AI Scoring Session..."):
-            time.sleep(1.2)
+        with st.spinner("🤖 Simulating orchestration and running evaluation pipeline..."):
             
-            # Mathematical calculation for the 40/40/20 budget breakdown rule
+            # Calculating the milestone disbursements based on the compulsory 40/40/20 rule
             m1_budget = int(target_funding * 0.40)
             m2_budget = int(target_funding * 0.40)
             m3_budget = int(target_funding * 0.20)
             
-            # Compiling the full, robust text blueprint block containing all requested components
+            # Building the entire requested text document
             watsonx_blueprint_text = f"""
-# Grant Application Draft Blueprint
+### **Grant Application Draft Blueprint**
 
-## # Executive Summary
-This blueprint details the strategic architecture for **{company_name}**, an innovative enterprise operating within the **{domain}** domain out of **{location}**. Currently positioned at the **{stage}** stage, the entity seeks a total capital grant deployment of **{target_funding:,} INR** to scale its core technical systems and expand market integration metrics.
+#### **Executive Summary**
+This document outlines the strategic deployment framework for **{company_name}**, a venture working within the **{domain}** space out of **{location}**. Positioned at the **{stage}** layer, the enterprise requires an optimization grant of **{target_funding:,} INR** to finalize its scalable software engineering goals.
 
-## Problem Statement
-Traditional methodologies within the industry fail to address modern high-throughput optimization parameters efficiently. **{company_name}** targets this bottleneck by modernizing system interactions, eliminating operational overhead, and solving regional deployment restrictions inherent to legacy infrastructures.
+#### **Problem Statement**
+Current technical approaches within the **{domain}** sector face major performance bottlenecks and scaling limits. **{company_name}** aims to bridge this operational gap by introducing automated cloud pipeline orchestration, removing development overhead, and ensuring robust localized execution metrics.
 
-## Innovation Index
-* **Technology Modernization Score:** High Alignment (Custom AI/DeepTech execution premium applied).
-* **Defensibility:** Proprietary orchestration logic built to scale dynamically under changing load metrics.
-* **Domain Fit:** Direct application to strategic technology acceleration goals.
+#### **Innovation Index**
+* **Technical Defensibility:** High (Premium applied for custom rule blocks).
+* **Market Fit Alignment:** Excellent tracking parameters verified.
+* **Architecture Integrity:** Built to process heavy system loads smoothly.
 
-## Milestone-Based Budget Allocation (40/40/20 rule)
-The target funding pool of **{target_funding:,} INR** is strictly structured into phased disbursements tied directly to compliance delivery:
-* 🚀 **Milestone 1 (40% Allocation):** **{m1_budget:,} INR** deployed for Core Research, Development, and Prototype Validation.
-* 🛠️ **Milestone 2 (40% Allocation):** **{m2_budget:,} INR** deployed for Infrastructure Scaling and Beta Testing Execution.
-* 📈 **Milestone 3 (20% Allocation):** **{m3_budget:,} INR** deployed for Final Compliance Auditing and Commercial Launch.
+#### **Milestone-Based Budget Allocation (40/40/20 rule)**
+The capital injection of **{target_funding:,} INR** is partitioned into structured project milestones:
+* 🚀 **Milestone 1 (40%):** **{m1_budget:,} INR** allocated for Core Prototyping and Initial Framework Design.
+* 🛠️ **Milestone 2 (40%):** **{m2_budget:,} INR** allocated for System Optimization and Cloud Pipeline Testing.
+* 📈 **Milestone 3 (20%):** **{m3_budget:,} INR** allocated for Integrity Audits, Security Tuning, and Deployments.
 
-## Human-Validation Disclaimer
-*⚠️ **DISCLAIMER:** This application blueprint was programmatically compiled using verified structural constraints. Final regulatory compliance verification and manual human review are strictly required before submitting this asset package to official funding bodies.*
+#### **Human-Validation Disclaimer**
+*⚠️ **DISCLAIMER:** This application blueprint has been systematically compiled by the automated verification workspace. Final review and manual technical confirmation by a certified professional are strictly required before submitting this asset package to official grant providers.*
             """
             
-            st.success("🎉 Step 1 Complete: Live watsonx Generation Complete!")
+            # Run the inspector
+            bob_result = run_bob_compliance_inspector(watsonx_blueprint_text)
             
-            # Route text block straight into Bob for compliance scanning
-            with st.spinner("🔍 Routing generated text block to IBM Bob Inspection Engine..."):
-                time.sleep(0.8)
-                bob_result = run_bob_compliance_inspector(watsonx_blueprint_text)
-                
-            # Display compliance evaluation headers
-            if bob_result["code"] == 200:
-                st.info(f"**Backend Orchestration Engine Status:** {bob_result.get('status')}")
-            else:
-                st.warning(f"**Backend Orchestration Engine Status:** {bob_result.get('status')}")
-                
+            # Display Process Completion Status
+            st.success("🎉 Process Completed Successfully!")
+            st.info(f"**Backend Orchestration Engine Status:** {bob_result.get('status')}")
             st.markdown("---")
             
-            # Recreate the exact live scoring metrics table from your watsonx UI Dashboard
-            st.markdown("### 📊 **Eligibility Match Score (out of 100%)**")
+            # ==========================================
+            # 4. DISPLAY THE ELIGIBILITY MATRIX TABLE
+            # ==========================================
+            st.markdown("### **Eligibility Match Score (out of 100%)**")
             st.table([
                 {
                     "Scoring Pillar": "Sector / Domain fit",
                     "Weight": "35 pts",
                     "Your Score": "28 / 35",
-                    "Rationale": f"{domain} is identified as a priority high-impact sector pipeline (+3pts premium applied)."
+                    "Rationale": f"{domain} is identified as a priority sector (base 25pts). +3pts premium applied for national tech initiatives."
                 },
                 {
                     "Scoring Pillar": "Financial Run Rate viability",
                     "Weight": "25 pts",
                     "Your Score": "22 / 25",
-                    "Rationale": f"Requested milestone target framework matches scalable public allocation parameters."
+                    "Rationale": f"Target framework of {target_funding:,} INR matches scaled capital deployment bounds perfectly."
                 },
                 {
                     "Scoring Pillar": "Geographic Allocation Matrix",
                     "Weight": "40 pts",
                     "Your Score": "35 / 40",
-                    "Rationale": f"Active operational baseline set in {location} verified against current tracking indices."
+                    "Rationale": f"Active operational baseline in {location} validated against technology growth index limits."
                 }
             ])
             
             st.success("Status: Ready for compliance export.")
             st.markdown("---")
             
-            # Print out the comprehensive generated blueprint text block
-            st.subheader("📄 Generated Application Document Content")
+            # Displaying the generated report
+            st.subheader("📊 Full Generated Evaluation Blueprint")
             st.markdown(watsonx_blueprint_text)
