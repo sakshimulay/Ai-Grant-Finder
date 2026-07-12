@@ -1,0 +1,54 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "IBM Bob Execution Bridge",
+    "version": "1.0.0",
+    "description": "Routes generated grant proposals directly to the IBM Bob orchestration engine for file compliance validation."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000",
+      "description": "Local IBM Bob Engine Backend"
+    }
+  ],
+  "paths": {
+    "/validate": {
+      "post": {
+        "operationId": "routeToBob",
+        "summary": "Send proposal validation data to Bob",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "proposal_text": {
+                    "type": "string",
+                    "description": "The complete text block of the draft grant proposal blueprint."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful validation callback parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string" },
+                    "code": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
